@@ -1,6 +1,16 @@
 [profile.default]
 src = 'src'
 out = 'out'
-libs = ['lib']
+libs = ['node_modules', 'lib']
+
+[fuzz]
+runs = 100000
+
+[fmt]
+line_length = 120
+tab_width = 4
+bracket_spacing = true
+quote_style = "double"
+
 
 # See more config options https://github.com/foundry-rs/foundry/tree/master/config

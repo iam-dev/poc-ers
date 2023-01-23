@@ -1,0 +1,13 @@
+{
+  "remappings": [
+    "ds-test/=lib/ds-test/src/",
+    "forge-std/=lib/forge-std/src/",
+    "@solidstate/=node_modules/@solidstate/",
+    "@openzeppelin/=node_modules/@openzeppelin/"
+  ],
+  "optimizer": {
+    "enabled": true,
+    "runs": 1000000
+  }
+}
+
