@@ -13,8 +13,6 @@ import { ArxDiamondMock } from "../mock/ArxDiamondMock.sol";
 import { TestUtils } from "@test/TestUtils.sol";
 
 contract ArxDiamondTest is Test, TestUtils, IERC173Internal, IDiamondWritableInternal {
-    address public immutable owner = address(1);
-
     ArxDiamondMock public mock;
     IArxDiamond public diamond;
     IERC173 public ownable;
@@ -22,7 +20,7 @@ contract ArxDiamondTest is Test, TestUtils, IERC173Internal, IDiamondWritableInt
     ArxERC721Mock public erc721_2;
 
     function setUp() public {
-        mock = new ArxDiamondMock(owner);
+        mock = new ArxDiamondMock(DEPLOYER);
         diamond = IArxDiamond(payable(mock));
         ownable = IERC173(address(mock));
         erc721 = new ArxERC721Mock("test", "TEST", "");
@@ -94,7 +92,7 @@ contract ArxDiamondTest is Test, TestUtils, IERC173Internal, IDiamondWritableInt
             action: FacetCutAction.ADD,
             selectors: selectors
         });
-        vm.prank(owner);
+        vm.prank(DEPLOYER);
         diamond.diamondCut(facetCuts, ZERO, "");     
         vm.stopPrank();
         IArxDiamond.Facet[] memory facets = diamond.facets();
@@ -137,7 +135,7 @@ contract ArxDiamondTest is Test, TestUtils, IERC173Internal, IDiamondWritableInt
             action: FacetCutAction.ADD,
             selectors: selectors
         });
-        vm.prank(owner);
+        vm.prank(DEPLOYER);
         diamond.diamondCut(facetCuts, ZERO, ""); 
         selectors[0] = IERC721.balanceOf.selector;
         facetCuts[0] = FacetCut({
@@ -145,7 +143,7 @@ contract ArxDiamondTest is Test, TestUtils, IERC173Internal, IDiamondWritableInt
             action: FacetCutAction.REPLACE,
             selectors: selectors
         });
-        vm.prank(owner);
+        vm.prank(DEPLOYER);
         diamond.diamondCut(facetCuts, ZERO, ""); 
         vm.stopPrank();
     }
@@ -166,7 +164,7 @@ contract ArxDiamondTest is Test, TestUtils, IERC173Internal, IDiamondWritableInt
             action: FacetCutAction.ADD,
             selectors: selectors
         });
-        vm.prank(owner);
+        vm.prank(DEPLOYER);
         vm.expectRevert(IDiamondWritableInternal.DiamondWritable__TargetHasNoCode.selector);
         diamond.diamondCut(facetCuts, ZERO, "");     
         vm.stopPrank();
@@ -187,7 +185,7 @@ contract ArxDiamondTest is Test, TestUtils, IERC173Internal, IDiamondWritableInt
             action: FacetCutAction.ADD,
             selectors: selectors
         });
-        vm.prank(owner);
+        vm.prank(DEPLOYER);
         diamond.diamondCut(facetCuts, ZERO, ""); 
         selectors[0] = IERC721.ownerOf.selector;
         facetCuts[0] = FacetCut({
@@ -195,7 +193,7 @@ contract ArxDiamondTest is Test, TestUtils, IERC173Internal, IDiamondWritableInt
             action: FacetCutAction.REPLACE,
             selectors: selectors
         });
-        vm.prank(owner);
+        vm.prank(DEPLOYER);
         vm.expectRevert(IDiamondWritableInternal.DiamondWritable__SelectorNotFound.selector);
         diamond.diamondCut(facetCuts, ZERO, ""); 
         vm.stopPrank();
@@ -216,7 +214,7 @@ contract ArxDiamondTest is Test, TestUtils, IERC173Internal, IDiamondWritableInt
             action: FacetCutAction.REPLACE,
             selectors: selectors
         });
-        vm.prank(owner);
+        vm.prank(DEPLOYER);
         vm.expectRevert(IDiamondWritableInternal.DiamondWritable__SelectorNotFound.selector);
         diamond.diamondCut(facetCuts, ZERO, ""); 
         vm.stopPrank();
@@ -237,7 +235,7 @@ contract ArxDiamondTest is Test, TestUtils, IERC173Internal, IDiamondWritableInt
             action: FacetCutAction.ADD,
             selectors: selectors
         });
-        vm.prank(owner);
+        vm.prank(DEPLOYER);
         
         diamond.diamondCut(facetCuts, ZERO, ""); 
 
@@ -246,7 +244,7 @@ contract ArxDiamondTest is Test, TestUtils, IERC173Internal, IDiamondWritableInt
             action: FacetCutAction.REPLACE,
             selectors: selectors
         });
-        vm.prank(owner);
+        vm.prank(DEPLOYER);
         vm.expectRevert(IDiamondWritableInternal.DiamondWritable__SelectorIsImmutable.selector);
         diamond.diamondCut(facetCuts, ZERO, ""); 
         vm.stopPrank();
@@ -267,7 +265,7 @@ contract ArxDiamondTest is Test, TestUtils, IERC173Internal, IDiamondWritableInt
             action: FacetCutAction.ADD,
             selectors: selectors
         });
-        vm.prank(owner);
+        vm.prank(DEPLOYER);
         diamond.diamondCut(facetCuts, ZERO, "");
 
         facetCuts[0] = FacetCut({
@@ -275,7 +273,7 @@ contract ArxDiamondTest is Test, TestUtils, IERC173Internal, IDiamondWritableInt
             action: FacetCutAction.REMOVE,
             selectors: selectors
         });
-        vm.prank(owner);
+        vm.prank(DEPLOYER);
         diamond.diamondCut(facetCuts, ZERO, "");   
         vm.stopPrank();
         IArxDiamond.Facet[] memory facets = diamond.facets();
@@ -298,7 +296,7 @@ contract ArxDiamondTest is Test, TestUtils, IERC173Internal, IDiamondWritableInt
             action: FacetCutAction.ADD,
             selectors: selectors
         });
-        vm.prank(owner);
+        vm.prank(DEPLOYER);
         diamond.diamondCut(facetCuts, ZERO, "");
 
         facetCuts[0] = FacetCut({
@@ -306,7 +304,7 @@ contract ArxDiamondTest is Test, TestUtils, IERC173Internal, IDiamondWritableInt
             action: FacetCutAction.REMOVE,
             selectors: selectors
         });
-        vm.prank(owner);
+        vm.prank(DEPLOYER);
         vm.expectRevert(IDiamondWritableInternal.DiamondWritable__RemoveTargetNotZeroAddress.selector);
         diamond.diamondCut(facetCuts, ZERO, "");   
         vm.stopPrank();
@@ -333,8 +331,8 @@ contract ArxDiamondTest is Test, TestUtils, IERC173Internal, IDiamondWritableInt
      // ArxDiamond transfer ethers
     function testAcceptEtherViaTransfer(uint112 amount) public {
         vm.assume(amount > 0);
-        vm.deal(owner, amount);
-        vm.prank(owner);
+        vm.deal(DEPLOYER, amount);
+        vm.prank(DEPLOYER);
         payable(diamond).transfer(amount);
         assertEq(address(diamond).balance, amount);
     }
@@ -342,8 +340,8 @@ contract ArxDiamondTest is Test, TestUtils, IERC173Internal, IDiamondWritableInt
     // ArxDiamond send ethers
     function testAcceptEtherViaSend(uint112 amount) public {
         vm.assume(amount > 0);
-        vm.deal(owner, amount);
-        vm.prank(owner);
+        vm.deal(DEPLOYER, amount);
+        vm.prank(DEPLOYER);
         assert(payable(diamond).send(amount));
         assertEq(address(diamond).balance, amount);
     }
@@ -351,8 +349,8 @@ contract ArxDiamondTest is Test, TestUtils, IERC173Internal, IDiamondWritableInt
     // ArxDiamond sending ethers with call
     function testAcceptEtherViaCall(uint112 amount) public {
         vm.assume(amount > 0);
-        vm.deal(owner, amount);
-        vm.prank(owner);
+        vm.deal(DEPLOYER, amount);
+        vm.prank(DEPLOYER);
         (bool sent, ) = payable(diamond).call{value: amount}("");
         assert(sent);
         assertEq(address(diamond).balance, amount);
@@ -373,7 +371,7 @@ contract ArxDiamondTest is Test, TestUtils, IERC173Internal, IDiamondWritableInt
     //::ArxDiamond::Ownable::#owner()
     function testOwner() public {
         //emit log("::Ownable::#owner()");
-        assertEq(ownable.owner(), owner);
+        assertEq(ownable.owner(), DEPLOYER);
     }
 
     //::ArxDiamond::SafeOwnable.#nomineeOwner()
@@ -385,11 +383,11 @@ contract ArxDiamondTest is Test, TestUtils, IERC173Internal, IDiamondWritableInt
     //::ArxDiamond::SafeOwnable::#transferOwnership(address)
     function testTransferOwnership(address newOwner) public {
         emit log("SafeOwnable::#transferOwnership(address), does not set new owner");
-        vm.prank(owner);
+        vm.prank(DEPLOYER);
         diamond.transferOwnership(newOwner);
         vm.stopPrank();
         assertEq(diamond.nomineeOwner(), newOwner);
-        assertEq(ownable.owner(), owner);
+        assertEq(ownable.owner(), DEPLOYER);
     }
 
     //::ArxDiamond::SafeOwnable::#transferOwnership(address)
@@ -407,7 +405,7 @@ contract ArxDiamondTest is Test, TestUtils, IERC173Internal, IDiamondWritableInt
     //::ArxDiamond::SafeOwnable::#acceptOwnership
     function testAcceptOwnership(address newOwner) public {
         emit log("SafeOwnable::#acceptOwnership()");
-        vm.prank(owner);
+        vm.prank(DEPLOYER);
         diamond.transferOwnership(newOwner);
         vm.stopPrank();
         assertEq(diamond.nomineeOwner(), newOwner);
@@ -421,14 +419,14 @@ contract ArxDiamondTest is Test, TestUtils, IERC173Internal, IDiamondWritableInt
     // emit OwnershipTransferred()
     function testExpectEmitAcceptOwnership(address newOwner) public {
         emit log("SafeOwnable::#acceptOwnership(), emit OwnershipTransferred()");
-        vm.prank(owner);
+        vm.prank(DEPLOYER);
         diamond.transferOwnership(newOwner);
         vm.stopPrank();
         assertEq(diamond.nomineeOwner(), newOwner);
         vm.prank(newOwner);
         vm.expectEmit(true, true, false, false);
         diamond.acceptOwnership();
-        emit OwnershipTransferred(owner, newOwner);
+        emit OwnershipTransferred(DEPLOYER, newOwner);
         vm.stopPrank();
         assertEq(ownable.owner(), newOwner);
     }
