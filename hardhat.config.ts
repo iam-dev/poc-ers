@@ -1,6 +1,8 @@
 import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
+import "hardhat-abi-exporter";
 import "hardhat-preprocessor";
+import "hardhat-spdx-license-identifier";
 import fs from "fs";
 
 function getRemappings() {
@@ -28,6 +30,26 @@ const config: HardhatUserConfig = {
       },
     }),
   },
+  gasReporter: {
+    enabled: true,
+  },
+
+  typechain: {
+    alwaysGenerateOverloads: true,
+  },
+
+  abiExporter: {
+    runOnCompile: true,
+    clear: true,
+    flat: true,
+    except: [".*Mock$"],
+  },
+
+  spdxLicenseIdentifier: {
+    overwrite: false,
+    runOnCompile: true,
+  },
+
   paths: {
     sources: "./src",
     cache: "./cache_hardhat",

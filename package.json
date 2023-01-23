@@ -7,6 +7,11 @@
     "test": "test"
   },
   "scripts": {
+    "lerna-publish": "yarn build && lerna publish && lerna run tsc-clean",
+    "build": "hardhat compile && lerna run tsc",
+    "prepare": "husky install",
+    "prettier": "prettier --write --ignore-path .gitignore .",
+    "upgrade-dependencies": "yarn-up -e '@arx/spec,@arx/typechain-types' && yarn upgrade",
     "test": "forge test && hardhat test"
   },
   "author": "IaM <DEV>",
@@ -16,6 +21,8 @@
     "prettier-plugin-solidity": "^1.1.1"
   },
   "devDependencies": {
+    "@arx/spec": "link:spec",
+    "@arx/typechain-types": "link:typechain-types",
     "@ethersproject/abi": "^5.4.7",
     "@ethersproject/providers": "^5.4.7",
     "@nomicfoundation/hardhat-chai-matchers": "^1.0.0",
@@ -24,7 +31,10 @@
     "@nomiclabs/hardhat-ethers": "^2.0.0",
     "@nomiclabs/hardhat-etherscan": "^3.0.0",
     "@openzeppelin/contracts": "4.8.1",
+    "@solidstate/abi": "^0.0.52",
     "@solidstate/contracts": "0.0.52",
+    "@solidstate/library": "^0.0.52",
+    "@solidstate/spec": "^0.0.52",
     "@typechain/ethers-v5": "^10.1.0",
     "@typechain/hardhat": "^6.1.2",
     "@types/chai": "^4.2.0",
@@ -34,9 +44,12 @@
     "ethers": "^5.4.7",
     "fs": "^0.0.1-security",
     "hardhat": "^2.12.6",
+    "hardhat-abi-exporter": "^2.10.1",
     "hardhat-gas-reporter": "^1.0.8",
     "hardhat-preprocessor": "^0.1.5",
+    "hardhat-spdx-license-identifier": "^2.1.0",
     "husky": "^8.0.3",
+    "lerna": "^6.4.1",
     "solidity-coverage": "^0.8.0",
     "ts-node": ">=8.0.0",
     "typechain": "^8.1.0",
