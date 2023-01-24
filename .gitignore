@@ -1,19 +1,72 @@
-# Foundry Compiler files
-cache/
-out/
+*.swp
+*.swo
+
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+allFiredEvents
+scTopics
+
+# Coverage directory used by tools like istanbul
+coverage
+coverage.json
+coverageEnv
+
+# node-waf configuration
+.lock-wscript
 
 # Ignores development broadcast logs
 !/broadcast
 /broadcast/*/31337/
 /broadcast/**/dry-run/
 
+# Dependency directory
 node_modules
+
+# Debug log from npm
+npm-debug.log
+
+# local env variables
 .env
-coverage
-coverage.json
+
+# truffle build directory
+build/
+
+# macOS
+.DS_Store
+
+# truffle
+.node-xmlhttprequest-*
+
+# IntelliJ IDE
+.idea
+
 typechain
 typechain-types
 dist
+
+# temporary artifact from solidity-coverage
+allFiredEvents
+.coverage_artifacts
+.coverage_cache
+.coverage_contracts
+
+# hardat-exposed
+contracts-exposed
+
+# Foundry Compiler files
+cache/
+out/
+
+# Certora
+.certora*
+.last_confs
+certora_*
 
 # Hardhat files
 cache_hardhat/

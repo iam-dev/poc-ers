@@ -5,6 +5,7 @@ libs = ['node_modules', 'lib']
 
 [fuzz]
 runs = 100000
+max_test_rejects = 100000
 
 [fmt]
 line_length = 120

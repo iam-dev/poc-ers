@@ -24,13 +24,7 @@ yarn run lerna bootstrap
 Compile contracts via Foundry Hardhat:
 
 ```bash
-forge build && yarn run hardhat compile
-```
-
-### Test
-
-```console
-yarn test
+yarn compile
 ```
 
 Generate a code coverage report using `solidity-coverage`:
@@ -58,7 +52,7 @@ myth analyze src/Counter.sol --solc-json mythril.config.json
 ```bash
 forge test
 # or
-npx hardhat test
+yarn test
 ```
 
  * Use Hardhat's task framework

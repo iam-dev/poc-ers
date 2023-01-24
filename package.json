@@ -7,19 +7,25 @@
     "test": "test"
   },
   "scripts": {
+    "compile": "hardhat compile && lerna run tsc",
+    "coverage": "env COVERAGE=true hardhat coverage",
+    "lint": "npm run lint:ts && npm run lint:sol",
+    "lint:fix": "npm run lint:ts:fix && npm run lint:sol:fix",
+    "lint:ts": "prettier --loglevel warn --ignore-path .gitignore '**/*.{js,ts}' --check && eslint --ignore-path .gitignore .",
+    "lint:js:fix": "prettier --loglevel warn --ignore-path .gitignore '**/*.{js,ts}' --write && eslint --ignore-path .gitignore . --fix",
+    "lint:sol": "prettier --loglevel warn --ignore-path .gitignore '{contracts,test}/**/*.sol' --check && solhint '{contracts,test}/**/*.sol'",
+    "lint:sol:fix": "prettier --loglevel warn --ignore-path .gitignore '{contracts,test}/**/*.sol' --write",
+    "clean": "hardhat clean && rimraf build contracts/build",
     "lerna-publish": "yarn build && lerna publish && lerna run tsc-clean",
-    "build": "hardhat compile && lerna run tsc",
     "prepare": "husky install",
     "prettier": "prettier --write --ignore-path .gitignore .",
     "upgrade-dependencies": "yarn-up -e '@arx/spec,@arx/typechain-types' && yarn upgrade",
-    "test": "forge test && hardhat test"
+    "test": "hardhat test",
+    "slither": "npm run clean && slither . --detect reentrancy-eth,reentrancy-no-eth,reentrancy-unlimited-gas"
   },
   "author": "IaM <DEV>",
   "license": "MIT",
-  "dependencies": {
-    "prettier": "^2.8.3",
-    "prettier-plugin-solidity": "^1.1.1"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@arx/spec": "link:spec",
     "@arx/typechain-types": "link:typechain-types",
@@ -43,6 +49,7 @@
     "chai": "^4.2.0",
     "ethers": "^5.4.7",
     "fs": "^0.0.1-security",
+    "graphlib": "^2.1.8",
     "hardhat": "^2.12.6",
     "hardhat-abi-exporter": "^2.10.1",
     "hardhat-gas-reporter": "^1.0.8",
@@ -50,9 +57,15 @@
     "hardhat-spdx-license-identifier": "^2.1.0",
     "husky": "^8.0.3",
     "lerna": "^6.4.1",
+    "lodash.startcase": "^4.4.0",
+    "lodash.zip": "^4.2.0",
+    "prettier": "^2.8.3",
+    "prettier-plugin-solidity": "^1.1.1",
+    "solidity-ast": "^0.4.43",
     "solidity-coverage": "^0.8.0",
     "ts-node": ">=8.0.0",
     "typechain": "^8.1.0",
-    "typescript": ">=4.5.0"
+    "typescript": ">=4.5.0",
+    "yargs": "^17.6.2"
   }
 }
